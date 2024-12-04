@@ -1,0 +1,1174 @@
+<!doctype html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-dark"
+    data-assets-path="backend/assets/" data-template="vertical-menu-template-free" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Beranda - Gondowangi</title>
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+
+
+    <style>
+        .header-calender {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .month-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .weekdays,
+        .days {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .weekdays span,
+        .days div {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .weekdays span {
+            font-weight: bold;
+        }
+
+        .days div {
+            cursor: pointer;
+        }
+
+        .today {
+            background-color: #3f51b5;
+            color: white;
+        }
+
+        .selected {
+            background-color: #d5d5d5;
+            color: white;
+        }
+
+        .text-heading-wrap {
+            display: inline-block;
+            max-width: 300px;
+            /* Sesuaikan dengan lebar yang diinginkan */
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        /* button untuk membuat blur */
+        .card-footer {
+            position: relative;
+        }
+
+        .blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(10px);
+            /* Tingkatkan blur untuk lebih terlihat */
+            background: rgba(255, 255, 255, 0.7);
+            /* Ubah transparansi agar lebih terlihat */
+            z-index: 1;
+        }
+
+        #applyVoucherBtn {
+            position: relative;
+            z-index: 2;
+            /* Agar tombol berada di atas overlay */
+        }
+    </style>
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="backend/assets/img/favicon/favicon.ico" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="assets/costum.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="assets/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="assets/carousel.css" />
+    <link rel="stylesheet" href="backend/assets/vendor/css/core.css&quot; class=&quot;template-customizer-core-css" />
+    <link rel="stylesheet" href="backend/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="backend/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Helpers -->
+    <script src="assets/vendor/helpers.js"></script>
+    <script src="assets/config.js"></script>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="/beranda" class="app-brand-link">
+                        <span class="app-brand-logo demo">
+                            <strong>
+                                LMS
+                            </strong>
+                        </span>
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner pt-1 pb-5">
+                    <!-- Dashboards -->
+                    <li class="menu-item ">
+                        <a href="/dashboard" class="menu-link menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                            <div class="text-truncate" data-i18n="Dashboards">Dashboard</div>
+                        </a>
+                    </li>
+
+                    <!-- Main Manage -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">UTAMA</span>
+                    </li>
+
+                    <!-- Kelas -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                            <div class="text-truncate" data-i18n="Layouts">Kelas</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="/kelolakelas" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without menu">Kelola Kelas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="/kategorikelas" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without navbar">Kategori Kelas</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!--Modul dan Test -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-book-content"></i>
+                            <div class="text-truncate" data-i18n="Layouts">Modul dan Test</div>
+                        </a>
+
+                        <!-- Content wrapper -->
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="/kelolamodul" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without menu">Kelola Modul</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="/kelolatest" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without navbar">Kelola Test</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Webinar dan Artikel -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-news"></i>
+                            <div class="text-truncate" data-i18n="Layouts">Wawasan</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="/kelolawebinar" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without menu">Kelola Webinar</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="/kelolainformasi" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without navbar">Kelola Informasi</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Karyawan -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div class="text-truncate" data-i18n="Layouts">Karyawan</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="/kelolakaryawan" class="menu-link">
+                                    <div class="/kelolakaryawan" data-i18n="Without menu">Data Karyawan</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="/kelolakoin" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without navbar">Atur Koin</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="menu-item ">
+                        <a href="/pemantauanTraining" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx-spreadsheet'></i>
+                            <div class="text-truncate" data-i18n="Chat">Pemantauan Training</div>
+                        </a>
+                    </li>
+
+
+                    <li class="menu-item active">
+                        <a href="/dataSertifikasi" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx-certification'></i>
+                            <div class="text-truncate" data-i18n="Chat">Data Sertifikasi</div>
+                        </a>
+                    </li>
+
+
+                    <li class="menu-item ">
+                        <a href="/aktivitaskaryawan" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-sitemap"></i>
+                            <div class="text-truncate" data-i18n="Chat">Aktivitas Karyawan</div>
+                        </a>
+                    </li>
+
+                    <!-- Components -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+
+
+                    <li class="menu-item ">
+                        <a href="/kelolastruktur" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-buildings"></i>
+                            <div class="text-truncate" data-i18n="Chat">Kelola Struktur</div>
+                        </a>
+                    </li>
+
+                    <!-- faq -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-help-circle"></i>
+                            <div class="text-truncate" data-i18n="Layouts">FAQ</div>
+                        </a>
+
+                        <ul class="menu-sub ">
+                            <li class="menu-item">
+                                <a href="/kelolafaq" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without menu">Kelola FAQ</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="/kategorifaq" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without navbar">Kategori Faq</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="menu-item ">
+                        <a href="/komentarkelas" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-message-dots"></i>
+                            <div class="text-truncate" data-i18n="Chat">Kelola Komentar</div>
+                            <div class="badge rounded-pill bg-label-danger text-uppercase fs-tiny ms-auto">
+                                1
+                            </div>
+                        </a>
+                    </li>
+
+
+                    <li class="menu-item ">
+                        <a href="/pengaduankaryawan" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-error-circle"></i>
+                            <div class="text-truncate" data-i18n="Chat">Pengaduan</div>
+                            <div class="badge rounded-pill bg-label-danger text-uppercase fs-tiny ms-auto">0</div>
+                        </a>
+                    </li>
+
+                    <!-- Website Components -->
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-globe"></i>
+                            <div class="text-truncate" data-i18n="Layouts">Komponen Website</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/kelolafaq" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Without menu">Banner</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- superadmin -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Superadmin</span></li>
+
+                    <li class="menu-item">
+                        <a href="/kelolaadmin" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <div class="text-truncate" data-i18n="Chat">Kelola Admin</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-md"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <!-- Search -->
+                        <div class="navbar-nav align-items-center">
+                            <div class="nav-item d-flex align-items-center">
+                                <i class="bx bx-search bx-sm"></i>
+                                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2"
+                                    placeholder="Search..." aria-label="Search..." />
+                            </div>
+                        </div>
+                        <!-- /Search -->
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- Place this tag where you want the button to render. -->
+                            <li class="nav-item bg-label-secondary p-1 rounded lh-1 me-4" style="cursor: pointer;">
+                                <a class="nav-link" data-icon="octicon-star" data-size="large"
+                                    onclick="logoutConfirm()">
+                                    <i class='bx bx-log-out me-2'></i> Keluar
+                                </a>
+                            </li>
+
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="http://127.0.0.1:8000/backend/assets/img/avatars/1.png" alt
+                                            class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+
+                    <!-- Content -->
+                    <!-- Content wrapper -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div class="card" style="background-color: rgb(247, 251, 255)">
+                            <div class="card-header d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title mb-1">Table Riwayat Sertifikasi</h6>
+                                    <p class="card-subtitle">Data Karyawan Yang Sudah Mempunyai Sertifikat</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+                                        <!-- Filter Rentang Tanggal -->
+                                        <div class="d-flex align-items-center gap-2">
+                                            <select id="dateRangeSelectCerf" class="form-select"
+                                                style="width: 200px; height: 38px;">
+
+                                                <option value="year">Tahun Ini</option>
+                                                <option value="custom">Custom</option>
+                                            </select>
+                                            <input type="text" id="dateRangePickerPelatihan" class="form-control"
+                                                placeholder="Atur rentang tanggal"
+                                                style="display: none; width: 200px; height: 38px;">
+                                            <button id="applyFilter" class="btn btn-primary"
+                                                style="height: 38px;">Terapkan</button>
+                                        </div>
+
+                                        <!-- Filter Departemen -->
+                                        <div>
+                                            <select id="departmentFilterCerf" class="form-select"
+                                                style="width: 200px; height: 38px;" data-allow-clear="true">
+                                                <option value="all" selected>Semua Departemen</option>
+                                                <option value="HCD">HCD</option>
+                                                <option value="Warehouse">Warehouse</option>
+                                                <option value="Marketing">Marketing</option>
+                                                <option value="Logistik">Logistik</option>
+                                                <option value="Sales Mizzu">Sales Mizzu</option>
+                                                <option value="QAC">QAC</option>
+                                                <option value="PPIC">PPIC</option>
+                                                <option value="BD RND">BD RND</option>
+                                                <option value="GA">GA</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Pencarian dan Ekspor -->
+                                        <form class="d-flex align-items-center gap-2" onsubmit="return false">
+                                            <input id="smallInputSertif" class="form-control" type="search"
+                                                placeholder="Cari Nama Karyawan atau Kelas"
+                                                style="width: 280px; height: 38px;">
+                                        </form>
+                                    </div>
+                                    <button id="export-excel" class="btn btn-primary d-flex align-items-center"
+                                        style="height: 38px;">
+                                        <i class='bx bx-cloud-download me-2 bx-sm'></i> Export
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="dataSertifikasi">
+                                        <thead>
+                                            <tr>
+                                                <th>Nomor Sertifikat</th>
+                                                <th class="text-nowrap">Nama Pelatihan</th>
+                                                <th>Nama Karyawan</th>
+                                                <th>Departemen</th>
+                                                <th>Terbit</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataSertifikasiBody">
+                                            <tr>
+                                                <td class="fw-bold">1/XII/2025/CERF/GONDOWANGI</td>
+                                                <td class="text-nowrap">Managing Stress At Work: Stress Less, Achieve
+                                                    More</td>
+                                                <td class="text-nowrap">Ai Opiasari Lusiana Rahmawati</td>
+                                                <td class="text-nowrap">Warehouse</td>
+                                                <td class="text-nowrap">1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">2/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Abu Bakar Nata Prawira</td>
+                                                <td>Warehouse</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">3/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Hendra Kurniawan</td>
+                                                <td>Sales</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">4/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Lidwina Diah Paranita</td>
+                                                <td>HCD</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">5/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Putri Intan Nadira</td>
+                                                <td>QAC</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">6/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Nurul Anisa</td>
+                                                <td>Sales Mizzu</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">7/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Fallya Pratiyi H</td>
+                                                <td>Marketing</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">8/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Managing Stress At Work: Stress Less, Achieve More</td>
+                                                <td>Ai Opiasari Lusiana Rahmawati</td>
+                                                <td>Warehouse</td>
+                                                <td>1 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">9/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Elyza</td>
+                                                <td>PPIC</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">10/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Ai Opiasari</td>
+                                                <td>LOGISTIK</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">11/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Abu Bakar Nata Prawira</td>
+                                                <td>LOGISTIK</td>
+                                                <td class="text-nowrap">2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">12/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>DITA ANANDA PUTRI</td>
+                                                <td>LOGISTIK</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">13/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Lidwina</td>
+                                                <td>HUMAN CAPITAL</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">14/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Eka septiana</td>
+                                                <td>SALES</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">15/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Nurul Anisa</td>
+                                                <td>SALES</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">16/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Sri Lestari</td>
+                                                <td>GA</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">17/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Kompetensi Administrasi Perkantoran</td>
+                                                <td>Ida Marsela</td>
+                                                <td>GA</td>
+                                                <td>2 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">18/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>ADITYAR INDRA PANGESTU</td>
+                                                <td>IT</td>
+                                                <td class="text-nowrap">3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">19/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Bayu Andi Saputra</td>
+                                                <td>BD RND</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">20/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Mita</td>
+                                                <td>BD RND</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">21/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Achmad Fatah</td>
+                                                <td>LOGISTIK</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">22/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>DITA ANANDA PUTRI</td>
+                                                <td>LOGISTIK</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">23/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Widra Kristian</td>
+                                                <td>BD RND</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">24/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Putri Intan Nadira</td>
+                                                <td>QAC</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">25/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Lidwina</td>
+                                                <td>HUMAN CAPITAL</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">26/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Nurul Fadilah</td>
+                                                <td>QAC</td>
+                                                <td>4 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">27/XII/2025/CERF/GONDOWANGI</td>
+                                                <td>Good Documentation Practice</td>
+                                                <td>Adam Hakal Yakin</td>
+                                                <td>HUMAN CAPITAL</td>
+                                                <td>3 December 2024</td>
+                                                <td>
+                                                    <a href="" class="btn btn-info btn-sm">Detail
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                    <!-- / Content -->
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div
+                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                                <div class="text-body">
+                                    ©2024
+
+                                    , LMS Gondowangi
+
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <div class="buy-now" style="cursor: pointer;">
+        <a href="/pengaduankaryawan" class="btn btn-danger btn-buy-now" style="cursor: pointer;">
+            <label for="" class="mr-4 me-3">Pengaduan</label>
+            <div class="badge rounded bg-label-danger text-uppercase fs-tiny ms-auto" style="margin-left: 8px;">0</div>
+        </a>
+    </div>
+
+
+    <!-- Core JS -->
+    <script>
+        function setUserId(userId) {
+            document.getElementById('user_credentials_id').value = userId;
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateRangeSelectCerf = document.getElementById('dateRangeSelectCerf');
+            const dateRangePickerPelatihan = document.getElementById('dateRangePickerPelatihan');
+            const applyFilter = document.getElementById('applyFilter');
+            const dataSertifikasiBody = document.getElementById('dataSertifikasiBody');
+            const rows = dataSertifikasiBody.getElementsByTagName('tr');
+
+            // Initialize Flatpickr for custom date range
+            flatpickr(dateRangePickerPelatihan, {
+                mode: 'range',
+                dateFormat: 'd M Y',
+            });
+
+            // Show/Hide custom date range picker
+            dateRangeSelectCerf.addEventListener('change', function () {
+                dateRangePickerPelatihan.style.display =
+                    this.value === 'custom' ? 'block' : 'none';
+            });
+
+            // Apply Filter Function
+            applyFilter.addEventListener('click', function () {
+                const filterType = dateRangeSelectCerf.value;
+                const customDateRange = dateRangePickerPelatihan.value;
+
+                // Get current date
+                const now = new Date();
+                const currentMonth = now.toLocaleString('default', { month: 'short' });
+                const currentYear = now.getFullYear();
+
+                // Filter the rows
+                Array.from(rows).forEach(row => {
+                    const dateTd = row.cells[4]; // Date column
+                    const rowDate = dateTd.textContent.trim();
+
+                    let shouldShow = true;
+
+                    switch (filterType) {
+                        case 'today':
+                            shouldShow = rowDate.includes(`${now.getDate()} ${currentMonth} ${currentYear}`);
+                            break;
+                        case 'month':
+                            // Cek apakah bulan dan tahun cocok
+                            shouldShow = rowDate.includes(`${currentMonth} ${currentYear}`);
+                            break;
+                        case 'year':
+                            shouldShow = rowDate.includes(currentYear.toString());
+                            break;
+                        case 'custom':
+                            if (customDateRange) {
+                                const [startDateStr, endDateStr] = customDateRange.split(' to ');
+                                const startDate = new Date(startDateStr);
+                                const endDate = new Date(endDateStr);
+                                const rowDateObj = new Date(rowDate);
+
+                                shouldShow = rowDateObj >= startDate && rowDateObj <= endDate;
+                            }
+                            break;
+                    }
+
+                    row.style.display = shouldShow ? '' : 'none';
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+    <script>
+        document.getElementById('export-excel').addEventListener('click', function () {
+            // Data untuk header tambahan
+            const headers = [
+                ["No", "Nomor Sertifikat", "Nama Pelatihan", "Nama Karyawan", "Departement", "Pelaksana"]
+            ];
+
+            // Ambil data dari tabel HTML
+            const table = document.getElementById('dataSertifikasi');
+            const tableData = [];
+            let counter = 1;
+
+            // Mengambil data dari tabel dan menambahkan nomor urut
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const rowData = [
+                    counter++,
+                    row.cells[0].textContent,
+                    row.cells[1].textContent,
+                    row.cells[2].textContent,
+                    row.cells[3].textContent,
+                    row.cells[4].textContent
+                ];
+                tableData.push(rowData);
+            });
+
+            // Buat worksheet baru
+            const ws = XLSX.utils.aoa_to_sheet([
+                ["DATSERTIFIKASI KARYAWAN GONDOWANGI 2024"],
+                [],  // Baris kosong
+                ...headers,
+                ...tableData
+            ]);
+
+            // Styling untuk judul
+            ws['A1'] = {
+                v: "DATA SERTIFIKASI KARYAWAN GONDOWANGI 2024",
+                s: {
+                    font: { bold: true, sz: 14 },
+                    alignment: { horizontal: "center" }
+                }
+            };
+
+            // Merge cells untuk judul
+            ws["!merges"] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }  // Merge A1:F1
+            ];
+
+            // Styling untuk header tabel
+            const headerStyle = {
+                fill: {
+                    fgColor: { rgb: "92D050" },  // Warna hijau
+                    patternType: "solid"
+                },
+                font: {
+                    bold: true,
+                    color: { rgb: "000000" }  // Warna text hitam
+                },
+                alignment: {
+                    horizontal: "center",
+                    vertical: "center",
+                    wrapText: true  // Wrap text jika terlalu panjang
+                },
+                border: {
+                    top: { style: "thin", color: { rgb: "000000" } },
+                    bottom: { style: "thin", color: { rgb: "000000" } },
+                    left: { style: "thin", color: { rgb: "000000" } },
+                    right: { style: "thin", color: { rgb: "000000" } }
+                }
+            };
+
+            // Terapkan style ke header
+            ["A3", "B3", "C3", "D3", "E3", "F3"].forEach(cell => {
+                ws[cell].s = headerStyle;
+            });
+
+            // Styling untuk data cells
+            const dataStyle = {
+                border: {
+                    top: { style: "thin", color: { rgb: "000000" } },
+                    bottom: { style: "thin", color: { rgb: "000000" } },
+                    left: { style: "thin", color: { rgb: "000000" } },
+                    right: { style: "thin", color: { rgb: "000000" } }
+                },
+                alignment: {
+                    vertical: "center",
+                    wrapText: true
+                }
+            };
+
+            // Terapkan style ke data cells
+            tableData.forEach((row, idx) => {
+                ["A", "B", "C", "D", "E", "F"].forEach((col, colIdx) => {
+                    const cellRef = `${col}${idx + 4}`;  // +4 karena data dimulai setelah judul dan header
+                    if (ws[cellRef]) {
+                        ws[cellRef].s = dataStyle;
+                    }
+                });
+            });
+
+            // Atur lebar kolom
+            ws['!cols'] = [
+                { wch: 5 },   // No
+                { wch: 12 },  // Tanggal/Bln
+                { wch: 30 },  // Nama Lengkap
+                { wch: 15 },  // Departement
+                { wch: 45 },  // Training
+                { wch: 15 }   // Pelaksana
+            ];
+
+            // Tambahkan AutoFilter
+            ws['!autofilter'] = { ref: `A3:F${tableData.length + 3}` };
+
+            // Buat workbook baru
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data Sertifikasi Karyawan");
+
+            // Export ke file Excel
+            XLSX.writeFile(wb, 'Data_Sertifikasi_karyawan.xlsx');
+        });
+    </script>
+
+    <script>
+        // Fungsi untuk mencari data dalam tabel
+        document.getElementById('smallInputSertif').addEventListener('keyup', function () {
+            const searchText = this.value.toLowerCase();
+            const table = document.getElementById('dataSertifikasi');
+            const rows = table.getElementsByTagName('tr');
+
+            // Loop melalui semua baris tabel, mulai dari index 1 untuk melewati header
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+
+                // Cek setiap sel dalam baris (fokus pada nama dan training)
+                const namaText = cells[1].textContent.toLowerCase(); // Kolom Nama Lengkap
+                const trainingText = cells[2].textContent.toLowerCase(); // Kolom Training
+
+                // Jika nama atau training mengandung text pencarian, tampilkan baris
+                if (namaText.includes(searchText) || trainingText.includes(searchText)) {
+                    found = true;
+                }
+
+                // Tampilkan atau sembunyikan baris berdasarkan hasil pencarian
+                row.style.display = found ? '' : 'none';
+            }
+        });
+
+        // Optional: Clear search ketika form di-reset
+        document.querySelector('form').addEventListener('reset', function () {
+            const table = document.getElementById('dataSertifikasi');
+            const rows = table.getElementsByTagName('tr');
+
+            // Tampilkan kembali semua baris
+            for (let i = 1; i < rows.length; i++) {
+                rows[i].style.display = '';
+            }
+        });
+    </script>
+
+
+    <script>
+        function extractYear(dateStr) {
+            return dateStr.split(' ')[2];
+        }
+
+        // Main filtering function
+        function filterTable() {
+            const yearSelect = document.getElementById('yearFilter');
+            const departmentSelect = document.getElementById('departmentFilterCerf');
+            const searchInput = document.getElementById('smallInputSertif');
+
+            const selectedYear = yearSelect.value;
+            const selectedDepartment = departmentSelect.value;
+            const searchText = searchInput.value.toLowerCase();
+
+            const table = document.getElementById('dataSertifikasi');
+            const rows = table.getElementsByTagName('tr');
+
+            // Loop through all rows (skip header row)
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+
+                // Skip if row doesn't have enough cells
+                if (cells.length < 5) continue;
+
+                // Get values from cells
+                const dateText = cells[0].textContent;
+                const year = extractYear(dateText);
+                const nameText = cells[1].textContent.toLowerCase();
+                const departmentText = cells[2].textContent;
+                const trainingText = cells[3].textContent.toLowerCase();
+
+                // Check if row matches all active filters
+                const matchesYear = selectedYear === 'all' || year === selectedYear;
+                const matchesDepartment = selectedDepartment === 'all' || departmentText === selectedDepartment;
+                const matchesSearch = searchText === '' ||
+                    nameText.includes(searchText) ||
+                    trainingText.includes(searchText);
+
+                // Show/hide row based on filter results
+                row.style.display = (matchesYear && matchesDepartment && matchesSearch) ? '' : 'none';
+            }
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            const yearSelect = document.getElementById('yearFilter');
+            const departmentSelect = document.getElementById('departmentFilterCerf');
+            const searchInput = document.getElementById('smallInputSertif');
+
+            // Add change event listeners to all filters
+            yearSelect.addEventListener('change', filterTable);
+            departmentSelect.addEventListener('change', filterTable);
+            searchInput.addEventListener('keyup', filterTable);
+
+            // Optional: Clear filters when form is reset
+            document.querySelector('form').addEventListener('reset', function () {
+                yearSelect.value = 'all';
+                departmentSelect.value = 'all';
+                searchInput.value = '';
+                filterTable();
+            });
+        });
+    </script>
+    <script src="http://127.0.0.1:8000/backend/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="http://127.0.0.1:8000/backend/assets/vendor/js/menu.js"></script>
+    <script src="http://127.0.0.1:8000/frontend/assets/vendor/popper.js"></script>
+    <script src="http://127.0.0.1:8000/frontend/assets/vendor/bootstrap.js"></script>
+    <script src="http://127.0.0.1:8000/frontend/assets/vendor/perfect-scrollbar.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="http://127.0.0.1:8000/frontend/assets/vendor/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="http://127.0.0.1:8000/backend/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="http://127.0.0.1:8000/frontend/assets/dashboards-analytics.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function logoutConfirm() {
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin keluar?',
+                text: "Anda akan logout dari akun ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6777ef',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, logout!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form logout jika user mengonfirmasi
+                    document.getElementById('logout-form').submit();
+                }
+            });
+        }
+
+
+    </script>
+
+    <!-- Form logout tersembunyi -->
+    <form id="logout-form" action="/keluar" method="POST" style="display: none;">
+        <input type="hidden" name="_token" value="cWbfwF5zAvyfCgQij2AHiM6jONKscHsSb0PwiFhH" autocomplete="off">
+    </form>
+</body>
+
+</html>
